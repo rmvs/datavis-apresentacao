@@ -13,6 +13,21 @@
         s.Survived = s.Aboard - s.Fatalities
         s.date = parser(s.Date + 'T' + ((s.Time == null || s.Time.length == 0) ? '00:00' : s.Time))
         s.Country = getCountry(s);
+        if(s.Fatalities != null && s.Fatalities.length > 0){
+            s.Fatalities = parseInt(s.Fatalities)
+        }else{
+            s.Fatalities = 0
+        }
+        if(s['Fatalities Passangers'] != null && s['Fatalities Passangers'].length > 0){
+            s['Fatalities Passangers'] = parseInt(s['Fatalities Passangers'])
+        }else{
+            s['Fatalities Passangers'] = 0
+        }
+        if(s['Fatalities Crew'] != null && s['Fatalities Crew'].length > 0){
+            s['Fatalities Crew'] = parseInt(s['Fatalities Crew'])
+        }else{
+            s['Fatalities Crew'] = 0
+        }
     });
     /*console.log(dataset2.filter(s => s.Country == 'Brazil'))
     console.log(dataset.filter(s => s.Operator.indexOf('Gol Airlines') > -1))*/
@@ -21,7 +36,7 @@
     var all = facts.groupAll();
     countDim = facts.dimension(d => {
         return d3.timeYear(d.date)
-    })
+    })    
     countGroup = countDim.group()
 
     aircraftOpTypeDim = facts.dimension(function (d) {
