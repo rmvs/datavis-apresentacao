@@ -360,6 +360,32 @@
         d3.select("#tooltip")
             .classed("hidden", true)
     }
+    
+    var operator = facts.dimension(d => d.Operator.trim())
+    var groupOp = operator.group()
+    var objs = operator.top(11)
+    var sortGroupOp = groupOp.all().sort(function(b, a) {
+        return a.value - b.value;
+    }).slice(0, 15)
+
+    var rowChartColor = d3.scaleLinear().domain([sortGroupOp[sortGroupOp.length - 1].value, sortGroupOp[0].value])
+        .interpolate(d3.interpolateHcl)
+        .range(["#FF0000", '#690505']);
+
+    dc.rowChart('#operator-count')
+        .width(800)
+        .height(380)
+        .x(d3.scaleLinear().domain([sortGroupOp[sortGroupOp.length - 1].value, sortGroupOp[0].value]))
+        .dimension(operator)
+        .group(groupOp)
+        .elasticX(true)
+        //.ordering(d => d.key)
+        .cap(12)
+        .othersGrouper(false)
+        .colors(function(d) {
+            var found = sortGroupOp.find(z => z.key == d).value
+            return rowChartColor(found)
+        })
 
 
     //drawCircles();
