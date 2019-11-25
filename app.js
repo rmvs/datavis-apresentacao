@@ -3,6 +3,7 @@
 
     var ntsb = await d3.csv('dataset/AviationData.csv');
     var dataset = await d3.csv('dataset/Airplane_Crashes_and_Fatalities_Since_1908_20190820105639.csv');
+    console.log(dataset)
 
     var id = 0;
     var parser = d3.utcParse("%m/%d/%YT%H:%M")
